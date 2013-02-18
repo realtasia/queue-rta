@@ -1,0 +1,1 @@
+<h2 class="h2" style="color: #4E555A; display: block; font-family: 'Open Sans', arial, serif; font-size: 30px; font-weight: normal; line-height: 100%; text-align: left; margin: 0 0 10px;" align="left"><?=$header ?></h2>
