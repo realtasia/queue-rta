@@ -70,7 +70,7 @@ class Job_Processor_Immediate {
                 $m = \Arr::get($this->messages, $type);
 
                 if ($m)
-                {                    
+                {
                     $this->{str_replace('-', '_', $type)}($m[0]);
                 }
 
@@ -93,7 +93,7 @@ class Job_Processor_Immediate {
                 {
                     //print_r([$this->messages[$type], array_reverse($this->messages[$type])]);
                     // check notifications before building emails.
-                    $notifications = Notifications::factory($recipient);                    
+                    $notifications = Notifications::factory($recipient);
                     $this->{$type}($m, $recipient_id, $notifications);
                 }
             }
@@ -114,12 +114,6 @@ class Job_Processor_Immediate {
         $r = empty($recipients) ? $this->extract_recipients($this->original_document) : (array) $recipients;
 
         $i = empty($interactors) ? $this->extract_interactors($this->messages) : (array) $interactors;
-
-        echo Debug::vars([
-            'r' => $r,
-            'i' => $i,
-            'merge' => array_unique(Arr::merge( $r, $i ))
-        ]);        
 
         $user_ids = array_unique(Arr::merge( $r, $i ));
 
@@ -195,8 +189,8 @@ class Job_Processor_Immediate {
         {
             if (!$notifications->other_post_likes())
                 return;
-        }        
-        
+        }
+
         // check if this is a profile like and see if user wants to be notified
         if ((string) $this->original_document->_id === $receip_id)
         {
@@ -292,7 +286,7 @@ class Job_Processor_Immediate {
      * @return Queue_Processer
      */
     public function wallpost($item)
-    {        
+    {
         $notifications = Notifications::factory($item['mentionee_ids']);
 
         if (!$notifications->wallpost())
@@ -340,7 +334,7 @@ class Job_Processor_Immediate {
     {
         $r = (string) $item['user_id'];
         $i = (string) $item['mentionee_ids'];
-        $this->set_users($r, $i);        
+        $this->set_users($r, $i);
 
         return $this->single_recipient_emails($item, $r, 'approve-testimonial');
     }
@@ -426,14 +420,14 @@ class Job_Processor_Immediate {
         ];
 
         $users = Collection::factory('interaction')->subscribers($args);
-        
+
         if($object_type === 'user')
         {
             $users[] = [
               '_id' => (string) $document->_id
             ];
         }
-        
+
         if(!empty($users))
         {
             //Kohana::$log->add('debug', print_r(Arr::path($users, '*._id', []), true));
@@ -507,7 +501,7 @@ class Job_Processor_Immediate {
      *
      * @return type
      */
-    public function add($type_key = 'group')
+    public function make_emails($type_key = 'group')
     {
         $mail_adder = Mail_Add::factory($this->original_document, $this->job);
 

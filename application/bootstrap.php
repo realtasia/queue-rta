@@ -100,7 +100,7 @@ Kohana::$config->attach(new Config_File);
  */
 Kohana::modules(array(
         'event'      => MODPATH . 'event', // Kohana 3 event class
-        'rt_core'    => MODPATH . 'rt_core', // Core RT classes
+        'RT'    => MODPATH . 'RT', // Core RT classes
         'cache'      => MODPATH . 'cache',      // Caching with multiple backends
         'mongodb'    => MODPATH . 'mongodb', // Database access
         'purifier'   => MODPATH . 'purifier',      // HTML purifier

@@ -9,7 +9,7 @@ require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
  * @copyright unknown
  */
 
-class Controller_Daemon extends Controller
+class Controller_Email extends Controller
 {
 
     public function before()
@@ -27,7 +27,7 @@ class Controller_Daemon extends Controller
         {
             pcntl_signal(SIGCHLD, array($this, 'sig_handler'));
             pcntl_signal(SIGTERM, array($this, 'sig_handler'));
-            declare(ticks = 1);            
+            declare(ticks = 1);
         }
 
     }
@@ -75,16 +75,16 @@ class Controller_Daemon extends Controller
             $this->daemon();
         }
     }
-    
+
     public function action_test()
     {
         // Find first task that is not being executed
         $j = Document::factory('job')->get_next();
 
         if (($j))
-        {                
-            
-            $pro = new Job_Processor_Immediate($j);            
+        {
+
+            $pro = new Job_Processor_Immediate($j);
             if ($j['is_single'])
                 $e = $pro->add('single');
             else
@@ -94,7 +94,7 @@ class Controller_Daemon extends Controller
             foreach($e->emails as $email)
             {
                 $queue->add($email);
-            }                    
+            }
 
             try
             {
@@ -107,9 +107,9 @@ class Controller_Daemon extends Controller
                     {
                         echo Debug::vars($r->body);
                         $success = $r->isOK();
-                    }                            
+                    }
                 }
-                
+
                 $job = Document::factory('job', $j['_id']);
 
                 if($success)
@@ -162,8 +162,8 @@ class Controller_Daemon extends Controller
                     foreach($e->emails as $email)
                     {
                         $queue->add($email);
-                    }                    
-                    
+                    }
+
                     try
                     {
                         //$token = Profiler::start('email', 'Send Email');
@@ -176,11 +176,11 @@ class Controller_Daemon extends Controller
                             {
                                 $success = $r->isOK();
                                 $failure = $r->body;
-                            }                            
+                            }
                         }
-                        
+
                         $job = Document::factory('job', $j['_id']);
-                        
+
                         if($success)
                         {
                             $job->update_status($job::SUCCESS);
@@ -188,10 +188,10 @@ class Controller_Daemon extends Controller
                         else
                         {
                             Kohana::$log->add('error', $failure);
-                            Kohana::$log->write();                            
+                            Kohana::$log->write();
                             $job->update_status($job::FAILED);
                         }
-                        
+
                         $queue = $j = $job = $pro = null;
                     }
                     catch (Exception $e)
@@ -203,7 +203,7 @@ class Controller_Daemon extends Controller
                 else
                 {
                     // No task in queue - sleep
-                    usleep(60000000);
+                    sleep(60);
                 }
             }
         }
@@ -263,7 +263,7 @@ class Controller_Daemon extends Controller
                 }
                 break;
             case SIGTERM:
-// Kill signal  
+// Kill signal
                 $this->clean();
                 $this->_sigterm = TRUE;
                 Kohana::$log->add('debug', 'Queue. Hit a SIGTERM');
