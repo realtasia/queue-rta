@@ -38,7 +38,7 @@
                                                 <div class="topbar" data-dropdown="dropdown">
                                                     <div class="topbar-inner">
                                                         <div class="container">
-                                                            <a style="float: left; padding:4px;" href="/"><img width="200px" height="46px" style="height: auto !important; line-height: 100% !important; outline: none !important; text-decoration: none !important; border: 0;" class="full-logo" alt="Realtasia Logo" src="http://static2.realtasia.com.sg/realtlogo5.png"></a>
+                                                            <a style="float: left; padding:4px;" href="/"><img width="200px" height="46px" style="height: auto !important; line-height: 100% !important; outline: none !important; text-decoration: none !important; border: 0;" class="full-logo" alt="Realtasia Logo" src="http://<?php echo RT::BUCKET?>/realtlogo5.png"></a>
                                                             <div class="clear"></div>
                                                         </div>
                                                     </div><!-- /topbar-inner -->
@@ -61,9 +61,9 @@
                                                 <a href="<?= $post_link ?>" style="min-width:110px;font-size:12px;border-radius:2px;margin:0 10px 0 1px;padding:5px;">
                                                     View this on Realtasia
                                                 </a>
-                                            </div>                                         
+                                            </div>
                                         </td></tr>
-                                </table>                               
+                                </table>
                                 <!-- // End Template Body \\ -->
                             </td>
                         </tr>
@@ -77,7 +77,7 @@
                                             <table width="100%" cellspacing="0" cellpadding="10" border="0">
                                                 <tbody><tr>
                                                         <td valign="middle" style="border-collapse:collapse;border:0" colspan="2">
-                                                            <div align="center" style="color:#707070;font-family:Arial;font-size:12px;line-height:125%;text-align:center">
+                                                            <div align="left" style="color:#707070;font-family:Arial;font-size:12px;line-height:125%;text-align:left">
                                                                 <a target="_blank" style="background-color:transparent;color:#fff;text-decoration:none;min-width:110px;font-size:12px;border-radius:2px;margin:0 10px 0 1px;padding:5px;" href="http://www.twitter.com/realtasia">
                                                                     <img style="vertical-align:middle;width:32px;min-height:auto!important;line-height:100%!important;outline:none!important;text-decoration:none!important;padding:0;border:0" src="http://cdn1.iconfinder.com/data/icons/Social_Network_Icons_gloss/64/Twitter-px.png">
                                                                         <span style="color:#6d6e6f;vertical-align:middle;font-weight:500;display:inline-block;font-family:'lucida grande',tahoma,verdana,arial,sans-serif;padding:0;border:0">

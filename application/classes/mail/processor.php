@@ -4,9 +4,10 @@
  * Realtasia Mail Processor.
  *
  * @author Jason Nathan
+ * @category RealtAsia
  * @package Queue
- * @subpackage Modules/Queue/Mail/Processor
- * @version 0.9
+ * @subpackage Mail_Processor
+ * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */
 class Mail_Processor{

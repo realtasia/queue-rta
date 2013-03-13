@@ -104,7 +104,6 @@ Kohana::modules(array(
         'RT'         => MODPATH . 'RT', // Core RT classes
         'ticker'     => MODPATH . 'ticker', // Caching with multiple backends
         'cache'      => MODPATH . 'cache', // Caching with multiple backends
-        'purifier'   => MODPATH . 'purifier', // HTML purifier
         'sms'        => MODPATH . 'sms', // SMSer
 ));
 

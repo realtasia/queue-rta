@@ -4,9 +4,10 @@
  * Realtasia Queue Processor.
  *
  * @author Jason Nathan
+ * @category RealtAsia
  * @package Queue
- * @subpackage Modules/Queue/Queue/Processor
- * @version 0.9
+ * @subpackage Job_Processor_Immediate
+ * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */
 class Job_Processor_Immediate {
@@ -23,7 +24,7 @@ class Job_Processor_Immediate {
     public static $types = array(
         'single' => [
             'mention', 'testimonial', 'wallpost', 'approve-testimonial',
-            'private-message'
+            'private-message', 'feedback'
         ],
         'group' => [
             'comment', 'like', 'subscribe'
@@ -165,6 +166,24 @@ class Job_Processor_Immediate {
         //echo Debug::vars(Model::factory('comment')->get($items[0]['comment_id']));
         return $this->recipient_emails($items, $receip_id, 'comment');
     }
+
+    /**
+     * sets possible 'comment' email messages for each recipient. Checks their
+     * notifications and adds accordingly
+     *
+     * @param array $items all comment items in this job
+     * @param array $recipient the retrived recipient array
+     * @return Queue_Processer
+     */
+    public function feedback($item)
+    {
+        $r = (string) $item['user_id'];
+        $i = (string) $item['mentionee_ids'];
+        $this->set_users($r, $i);
+
+        return $this->single_recipient_emails($item, $r, 'feedback');
+    }
+
 
     /**
      * sets possible 'like' email messages for each recipient. Checks their

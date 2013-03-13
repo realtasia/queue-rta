@@ -7,8 +7,8 @@ require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
  * @link https://github.com/jonnyjon/Task-Queue/blob/master/classes/controller/daemon.php
  * @author Jason Nathan
  * @category RealtAsia
- * @package RT_Controller
- * @subpackage Email
+ * @package Queue
+ * @subpackage Controller_Email
  * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */

@@ -3,10 +3,13 @@
 /**
  * RTA Base Queue worker (processes all background events for posts)
  *
+ * @link https://github.com/jonnyjon/Task-Queue/blob/master/classes/controller/daemon.php
  * @author Jason Nathan
- * @package realtasia-beta-0.8
- * @subpackage Controller
- * @copyright unknown
+ * @category RealtAsia
+ * @package Queue
+ * @subpackage Worker
+ * @version 1.0
+ * @copyright 2012 Realtasia Pte Ltd
  */
 
 /**
@@ -64,7 +67,7 @@
 // /queue/lost_password/user/{user_id}  -> USER INSTRUCTIONS AFTER IDENTIFY
 // /queue/feedback/user/{object_id}/{user_id} -> ADMIN EMAIL + USER THANK YOU
 
-abstract class Controller_EmailProcessor extends Controller_CLI{
+abstract class Controller_Worker extends Controller_CLI{
 
     public static function verify_object()
     {

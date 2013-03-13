@@ -7,8 +7,8 @@ defined('SYSPATH') or die('No direct script access.');
  *
  * @author Jason Nathan
  * @category RealtAsia
- * @package RT_Controller
- * @subpackage Ticker
+ * @package Queue
+ * @subpackage Controller_Ticker
  * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */

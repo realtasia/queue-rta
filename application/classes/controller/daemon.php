@@ -5,8 +5,8 @@
  *
  * @author Jason Nathan
  * @category RealtAsia
- * @package RT_Controller
- * @subpackage Daemon
+ * @package Queue
+ * @subpackage Controller_Daemon
  * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */

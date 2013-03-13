@@ -3,9 +3,11 @@
  * Mongo Job Model.
  *
  * @author Jason Nathan
- * @package realtasia-beta-0.8
- * @subpackage Model
- * @copyright 2011 Realtasia Pte Ltd
+ * @category RealtAsia
+ * @package Queue
+ * @subpackage Document_Job
+ * @version 1.0
+ * @copyright 2012 Realtasia Pte Ltd
  */
 
 /**

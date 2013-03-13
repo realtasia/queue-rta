@@ -4,10 +4,12 @@ require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
  * Realtasia Mail Adder. A helper class to add Emails to the queue in a standardised
  * fashion
  *
+ * @link https://github.com/jonnyjon/Task-Queue/blob/master/classes/controller/daemon.php
  * @author Jason Nathan
+ * @category RealtAsia
  * @package Queue
- * @subpackage Modules/Queue/Mail/Add
- * @version 0.9
+ * @subpackage Mail_Add
+ * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */
 class Mail_Add{
@@ -53,42 +55,101 @@ class Mail_Add{
      * @param MongoDocument $recipient the user object for the recipient
      * @param string $type the interaction type, comment, like etc
      * @param array $items the items by interaction type
-     * @return Mail_Add
+     * @return \Mail_Add
      */
     public function process($recipient, $type, $items)
     {
         //echo Debug::Vars($items);
-        $content  = $this->{$type}($recipient, $items);
+        $content  = $this->{str_replace('-', '_', $type)}($recipient, $items);
         $notification_url = static::_notification_url($recipient['_id']);
         $email = AmazonSDK::SES();
 
-        $view = View::factory('emails/email')
-              ->set('title', $content['header_plain'])
-              ->set('notification_url', $notification_url)
-              ->set('teaser', strip_tags($content['message']))
-              ->set('type', ucfirst($type))
-              ->set('post_link', static::$url . static::_post_uri())
-              ->set('content_view', $content['message']);
+        switch($type)
+        {
+            case 'feedback': case 'registration': case 'markerting':
+            case 'welcome': case 'beta':
+                $view = View::factory('emails/generic')
+                    ->set('title', $content['header_plain'])
+                    ->set('teaser', strip_tags($content['message']))
+                    ->set('content_view', $content['message']);
 
-        $plainview = View::factory('emails/content/plaintext')
-              ->set('notification_url', $notification_url)
-              ->set('type', ucfirst($type))
-              ->set('post_link', static::$url . static::_post_uri())
-              ->set('content_header', $content['header_plain'])
-              ->set('content_message', $content['message_plain']);
+                $plainview = View::factory('emails/content/plaintext')
+                    ->set('title', $content['header_plain'])
+                    ->set('teaser', strip_tags($content['message']))
+                    ->set('content_view', $content['message']);
 
-        $this->emails[] = $email->send_email(
-                'Realtasia Notifications <support@realtasia.com.sg>', [
-                    'ToAddresses' => [
-                        $recipient['name'] . "<" . $recipient['email'] . ">"
-                    ]
-                ], [
-                    'Subject.Data' => $content['header_plain'],
-                    'Body.Text.Data' => $plainview->render(),
-                    'Body.Html.Data' => $view->render(),
-                ], [
-                    'returnCurlHandle' => true
-                ]);
+                $this->emails[] = $email->send_email(
+                        RT::NOTIFICATIONS, [
+                            'ToAddresses' => [
+                                $recipient['name'] . "<" . $recipient['email'] . ">"
+                            ]
+                        ], [
+                            'Subject.Data'   => $content['header_plain'],
+                            'Body.Text.Data' => $plainview->render(),
+                            'Body.Html.Data' => $view->render(),
+                        ], [
+                            'returnCurlHandle' => true
+                        ]);
+                break;
+            case 'adminEmail':
+                $content = array(
+                    'header_plain'  => $content['header_plain'],
+                    'message_plain' => $content['message'],
+                    'message'       => View::factory('emails/content/standard')
+                            ->set('content_header', "<h3>{$content['header_plain']}</h3>")
+                            ->set('content_message', "<pre>{$content['message']}</pre>")
+                );
+
+                $view = View::factory('emails/admin')
+                        ->set('title', $content['header_plain'])
+                        ->set('teaser', strip_tags($content['header_plain']))
+                        ->set('content_view', $content['message']);
+
+                $plainview = View::factory('emails/content/plaintext_generic')
+                        ->set('content_header', $content['header_plain'])
+                        ->set('content_message', $content['message_plain']);
+
+                $this->emails[] = $email->send_email(
+                        RT::NOTIFICATIONS, [
+                            'ToAddresses' => [RT::ADMINS]
+                        ], [
+                            'Subject.Data'   => $content['header_plain'],
+                            'Body.Text.Data' => $plainview->render(),
+                            'Body.Html.Data' => $view->render(),
+                        ], [
+                            'returnCurlHandle' => true
+                        ]);
+                break;
+            default:
+                $view = View::factory('emails/email')
+                    ->set('title', $content['header_plain'])
+                    ->set('notification_url', $notification_url)
+                    ->set('teaser', strip_tags($content['message']))
+                    ->set('type', ucfirst($type))
+                    ->set('post_link', static::$url . static::_post_uri())
+                    ->set('content_view', $content['message']);
+
+                $plainview = View::factory('emails/content/plaintext')
+                      ->set('notification_url', $notification_url)
+                      ->set('type', ucfirst($type))
+                      ->set('post_link', static::$url . static::_post_uri())
+                      ->set('content_header', $content['header_plain'])
+                      ->set('content_message', $content['message_plain']);
+
+                $this->emails[] = $email->send_email(
+                        RT::NOTIFICATIONS, [
+                            'ToAddresses' => [
+                                $recipient['name'] . "<" . $recipient['email'] . ">"
+                            ]
+                        ], [
+                            'Subject.Data'   => $content['header_plain'],
+                            'Body.Text.Data' => $plainview->render(),
+                            'Body.Html.Data' => $view->render(),
+                        ], [
+                            'returnCurlHandle' => true
+                        ]);
+                break;
+        }
 
         return $this;
 
@@ -118,8 +179,24 @@ class Mail_Add{
         $summary  = static::_build_interaction_summary($recipient, $items, 'commented on ');
         $comment  = View::factory('emails/content/comment')
                         ->set('name', $user['name'])
-                        ->set('avatar', static::_get_avatar($user))                
+                        ->set('avatar', static::_get_avatar($user))
                         ->set('comment', $excerpt);
+
+        return static::_generic($summary, $comment, $recipient);
+    }
+
+    /**
+     *
+     * @param MongoDocument $recipient the user object for the recipient
+     * @param array $items the items by interaction type
+     * @uses static::_generic() to generate content
+     * @return NULL
+     */
+    public function feedback($recipient, $item)
+    {
+        $summary  = "thank you for your feedback.";
+
+        $comment  = "We have received your email and will keep you posted.";
 
         return static::_generic($summary, $comment, $recipient);
     }
@@ -174,7 +251,7 @@ class Mail_Add{
                           .static::_post_link('testimonial', 'testimonial')
                           ." in your profile page.";
         $content_message = "\n"."You can approve or remove this testimonial by following the link below.";
-        
+
         if(isset($item['user']))
         {
             $user = $item['user'];
@@ -187,17 +264,17 @@ class Mail_Add{
                 {
                     $user = $i['user'];
                 }
-            }            
+            }
         }
         //die(Debug::vars(static::$doc));
         $comment  = View::factory('emails/content/comment')
                         ->set('name', $user['name'])
-                        ->set('avatar', static::_get_avatar($user['user']))                  
+                        ->set('avatar', static::_get_avatar($user['user']))
                         ->set('comment', static::$doc->excerpt);
 
         $content_message = $content_message . "\n" . $comment;
 
-        return static::_generic($summary, $content_message, $recipient);        
+        return static::_generic($summary, $content_message, $recipient);
     }
 
     /**
@@ -214,14 +291,14 @@ class Mail_Add{
         $summary  = static::get_counts($item)
                           ."approved the "
                           .static::_post_link('testimonial')
-                          ." you wrote for him:";
+                          ." you wrote:";
 
         $comment  = View::factory('emails/content/comment')
                         ->set('name', 'You')
-                        ->set('avatar', "")                 
+                        ->set('avatar', "")
                         ->set('comment', static::$doc->excerpt);
-        
-        return static::_generic($summary, $comment, $recipient);  
+
+        return static::_generic($summary, $comment, $recipient);
     }
 
     /**
@@ -251,16 +328,16 @@ class Mail_Add{
                 {
                     $user = $i['user'];
                 }
-            }            
+            }
         }
         //die(Debug::vars(static::$doc));
         $comment  = View::factory('emails/content/comment')
                         ->set('name', $user['name'])
-                        ->set('avatar', static::_get_avatar($user['user']))               
+                        ->set('avatar', static::_get_avatar($user['user']))
                         ->set('comment', static::$doc->excerpt)
                         ->render();
-        
-        return static::_generic($summary, $comment, $recipient);  
+
+        return static::_generic($summary, $comment, $recipient);
     }
 
 
@@ -321,7 +398,7 @@ class Mail_Add{
     }
 
     /**
-     * Used by all generic interaction emails. Creates a greeting, the plain text
+     * Used by all notification interaction emails. Creates a greeting, the plain text
      * version of the content and the HTML version of the content
      *
      * @param MongoDocument $recipient the user object for the recipient
@@ -400,7 +477,7 @@ class Mail_Add{
      */
     protected static function _post_uri($post_type = 'post')
     {
-        return '/post/' . static::$job->document_id;
+        return "/$post_type/" . static::$job->document_id;
     }
 
     /**
@@ -414,10 +491,10 @@ class Mail_Add{
         {
             $type = static::$doc->type ? static::$doc->type : 'user';
         }
-        
+
         $name = $type === 'user' ? 'profile page' : $type;
         $link = Inflector::singularize( (string) static::$doc->collection());
-        
+
         return static::_anchor("/$link/" . static::$job->document_id, $name);
     }
 
@@ -447,7 +524,7 @@ class Mail_Add{
     protected static function _adj_or_noun($recipient, $adjective = 'your')
     {
         $user = isset(static::$doc->user) ? static::$doc->user : static::$doc->as_array();
-        
+
         if((string) $user['_id'] === (string) $recipient['_id'])
             return "$adjective ";
 
@@ -467,14 +544,13 @@ class Mail_Add{
     {
         return HTML::anchor(static::$url . $uri, $name, ['target' => '_blank']);
     }
-    
+
     protected static function _get_avatar($user)
-    {              
+    {
         if($user instanceof Document)
         {
             $user = $user->as_array();
         }
-        $bucket = 'http://static2.realtasia.com.sg/avatars/';
 
         $id   = (string) $user['_id'];
         $size = 40;
@@ -485,7 +561,7 @@ class Mail_Add{
             return 'http://' . str_replace($id, "$id/$size", $avtr);
         }
 
-        return $bucket . strtoupper(substr($user['info']['gender'], 0, 1)) . $size . '.png';
+        return RT::BUCKET . strtoupper(substr($user['info']['gender'], 0, 1)) . $size . '.png';
     }
 
     /**
