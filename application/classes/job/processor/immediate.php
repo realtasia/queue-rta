@@ -19,9 +19,9 @@ class Job_Processor_Immediate {
     public $original_document;
     public $document_owner;
 
-    /** @var bool  if false, performs batch operations. */
+    /** @var bool if false, performs batch operations. */
     public $is_single = FALSE;
-    public static $types = array(
+    public static $types = [
         'single' => [
             'mention', 'testimonial', 'wallpost', 'approve-testimonial',
             'private-message', 'feedback'
@@ -29,12 +29,12 @@ class Job_Processor_Immediate {
         'group' => [
             'comment', 'like', 'subscribe'
         ]
-    );
+    ];
 
     /**
      *
-     * @param MongoDocument $job
-     * @return class Queue_Processer
+     * @param Document $job
+     * @return \Job_Processor_Immediate
      */
     public function __construct($job)
     {
@@ -58,7 +58,9 @@ class Job_Processor_Immediate {
 
         // set the author
         $od = $this->original_document;
-        $this->document_owner = isset($od->user) ? (string) $od->user['_id'] : (string) $this->job->document_id;
+        $this->document_owner = isset($od->user)
+                ? (string) $od->user['_id']
+                : (string) $this->job->document_id;
 
 
         //echo Debug::vars($this->messages['comment']);
@@ -168,8 +170,7 @@ class Job_Processor_Immediate {
     }
 
     /**
-     * sets possible 'comment' email messages for each recipient. Checks their
-     * notifications and adds accordingly
+     * sets 'feedback' message for recipient. This is an acknowledgement email.
      *
      * @param array $items all comment items in this job
      * @param array $recipient the retrived recipient array
@@ -178,8 +179,7 @@ class Job_Processor_Immediate {
     public function feedback($item)
     {
         $r = (string) $item['user_id'];
-        $i = (string) $item['mentionee_ids'];
-        $this->set_users($r, $i);
+        $this->set_users($r);
 
         return $this->single_recipient_emails($item, $r, 'feedback');
     }

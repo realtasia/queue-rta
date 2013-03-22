@@ -99,9 +99,8 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-        'event'      => MODPATH . 'event', // Kohana 3 event class
-        'mongodb'    => MODPATH . 'mongodb', // Database access
         'RT'         => MODPATH . 'RT', // Core RT classes
+        'mongodb'    => MODPATH . 'mongodb', // Database access
         'ticker'     => MODPATH . 'ticker', // Caching with multiple backends
         'cache'      => MODPATH . 'cache', // Caching with multiple backends
         'sms'        => MODPATH . 'sms', // SMSer

@@ -4,7 +4,6 @@ require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
  * Realtasia Mail Adder. A helper class to add Emails to the queue in a standardised
  * fashion
  *
- * @link https://github.com/jonnyjon/Task-Queue/blob/master/classes/controller/daemon.php
  * @author Jason Nathan
  * @category RealtAsia
  * @package Queue
@@ -13,11 +12,6 @@ require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
  * @copyright 2012 Realtasia Pte Ltd
  */
 class Mail_Add{
-
-    /** @var string The url to use to build links.
-     * @todo move this out to a config file.
-     */
-    public static $url = 'http://beta.realtasia.com.sg';
 
     /** @var array The generated list of emails to add to the db
      */
@@ -63,6 +57,7 @@ class Mail_Add{
         $content  = $this->{str_replace('-', '_', $type)}($recipient, $items);
         $notification_url = static::_notification_url($recipient['_id']);
         $email = AmazonSDK::SES();
+        $url = 'http://' . RT::APP_SERVER;
 
         switch($type)
         {
@@ -126,13 +121,13 @@ class Mail_Add{
                     ->set('notification_url', $notification_url)
                     ->set('teaser', strip_tags($content['message']))
                     ->set('type', ucfirst($type))
-                    ->set('post_link', static::$url . static::_post_uri())
+                    ->set('post_link', $url . static::_post_uri())
                     ->set('content_view', $content['message']);
 
                 $plainview = View::factory('emails/content/plaintext')
                       ->set('notification_url', $notification_url)
                       ->set('type', ucfirst($type))
-                      ->set('post_link', static::$url . static::_post_uri())
+                      ->set('post_link', $url . static::_post_uri())
                       ->set('content_header', $content['header_plain'])
                       ->set('content_message', $content['message_plain']);
 
@@ -200,6 +195,24 @@ class Mail_Add{
 
         return static::_generic($summary, $comment, $recipient);
     }
+
+    /**
+     *
+     * @param MongoDocument $recipient the user object for the recipient
+     * @param array $items the items by interaction type
+     * @uses static::_generic() to generate content
+     * @return NULL
+     */
+    public function join_beta($recipient, $item)
+    {
+        //'We received your submission', Kohana::message('user/info', 'welcome_aboard')
+        $summary  = "we received your submission!";
+
+        $comment  = Kohana::message('user/info', 'thank_you_beta_email');
+
+        return static::_generic($summary, $comment, $recipient);
+    }
+
 
     /**
      * Process likes
@@ -467,7 +480,7 @@ class Mail_Add{
      */
     protected static function _notification_url($recipient_id)
     {
-        return static::$url . '/' . $recipient_id . '/settings';
+        return 'http://' . RT::APP_SERVER . '/' . $recipient_id . '/settings';
     }
 
     /**
@@ -475,9 +488,9 @@ class Mail_Add{
      *
      * @return string URI
      */
-    protected static function _post_uri($post_type = 'post')
+    protected static function _post_uri()
     {
-        return "/$post_type/" . static::$job->document_id;
+        return "/post/?id=" . static::$job->document_id;
     }
 
     /**
@@ -495,7 +508,7 @@ class Mail_Add{
         $name = $type === 'user' ? 'profile page' : $type;
         $link = Inflector::singularize( (string) static::$doc->collection());
 
-        return static::_anchor("/$link/" . static::$job->document_id, $name);
+        return static::_anchor("/$link/?id=" . static::$job->document_id, $name);
     }
 
     /**
@@ -542,9 +555,15 @@ class Mail_Add{
      */
     protected static function _anchor($uri, $name)
     {
-        return HTML::anchor(static::$url . $uri, $name, ['target' => '_blank']);
+        return HTML::anchor('http://' . RT::APP_SERVER . $uri, $name, ['target' => '_blank']);
     }
 
+    /**
+     * Small utility that extracts the avatar for a user.
+     *
+     * @param mixed Document|array $user
+     * @return string the url for the avatar
+     */
     protected static function _get_avatar($user)
     {
         if($user instanceof Document)
@@ -560,8 +579,9 @@ class Mail_Add{
         {
             return 'http://' . str_replace($id, "$id/$size", $avtr);
         }
-
-        return RT::BUCKET . strtoupper(substr($user['info']['gender'], 0, 1)) . $size . '.png';
+        $url = 'http://' . RT::BUCKET . '/avatars/';
+        $gender = \Arr::get($user['info'], 'gender', 'male');
+        return $url . strtoupper(substr($gender, 0, 1)) . $size . '.png';
     }
 
     /**

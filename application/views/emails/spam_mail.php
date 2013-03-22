@@ -107,7 +107,7 @@
                                             <div style="color: #999999; font-family: 'lucida grande',tahoma,verdana,arial,sans-serif; font-size: 11px; line-height: 125%; text-align: left;" align="left">
                                                 Copyright &copy; 2010 - 2012 Realtasia Pte Ltd, All rights reserved.
                                                 <strong>Our mailing address is:</strong>
-                                                10 Anson Road | International Plaza | #21-02 | Singapore 079903
+                                                10 Anson Road | International Plaza | #10-11 | Singapore 079903
                                             </div>
 
                                         </td>
