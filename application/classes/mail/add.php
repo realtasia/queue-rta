@@ -56,7 +56,7 @@ class Mail_Add{
         //echo Debug::Vars($items);
         $content  = $this->{str_replace('-', '_', $type)}($recipient, $items);
         $notification_url = static::_notification_url($recipient['_id']);
-        $email = AmazonSDK::SES();
+        $email = ASDK::SES();
         $url = 'http://' . RT::APP_SERVER;
 
         switch($type)
