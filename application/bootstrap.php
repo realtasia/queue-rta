@@ -101,7 +101,8 @@ Kohana::$config->attach(new Config_File);
 Kohana::modules(array(
         'RT'         => MODPATH . 'RT', // Core RT classes
         'mongodb'    => MODPATH . 'mongodb', // Database access
-        'ticker'     => MODPATH . 'ticker', // Caching with multiple backends
+        'queue'      => MODPATH . 'queue', // RT Queue class
+        'ticker'     => MODPATH . 'ticker', // RT ticker class
         'cache'      => MODPATH . 'cache', // Caching with multiple backends
         'sms'        => MODPATH . 'sms', // SMSer
 ));
@@ -115,5 +116,3 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'welcome',
 		'action'     => 'index',
 	));
-
-//require(APPPATH.'config/rt_routes.php');

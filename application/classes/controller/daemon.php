@@ -69,6 +69,7 @@ abstract class Controller_Daemon extends Controller {
         if (count($this->_pids))
         {
             Kohana::$log('error', 'Queue. Could not kill all children');
+            //Kohana::$log->write();
         }
     }
 
