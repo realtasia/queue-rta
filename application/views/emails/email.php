@@ -4,19 +4,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php echo trim($title) ?></title>
     </head>
-    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="width: 100% !important; -webkit-text-size-adjust: none; background-color: #DDDDDD; margin: 0; padding: 0;" bgcolor="#DDDDDD">
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="width: 100% !important;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial; -webkit-text-size-adjust: none; background-color: #DDDDDD; margin: 0; padding: 0;" bgcolor="#DDDDDD">
         <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable" style="height: 100% !important; width: 100% !important; background-color: #DDDDDD; margin: 0; padding: 0;" bgcolor="#DDDDDD">
             <tr>
                 <td align="center" valign="top" style="border-collapse: collapse;">
                     <!-- // Begin Template Preheader \\ -->
-                    <table border="0" cellpadding="0" cellspacing="0" id="templatePreheader" style="background-color: transparent;width:100%;max-width:600px" bgcolor="#DDDDDD">
+                    <table border="0" cellpadding="0" cellspacing="0" id="templatePreheader" style="background-color: transparent;width:100%;max-width:600px;margin:0;" bgcolor="#DDDDDD">
                         <tr>
                             <td class="preheaderContent" style="border-collapse: collapse;">
                                 <!-- // Begin Module: Standard Preheader \ -->
                                 <div style="color: #505050; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 10px; line-height: 100%; text-align: left; padding:0;vertical-align: middle" align="left">
                                     <?php echo trim($teaser) ?>
-                                    /div>
-                                    <!-- // End Module: Standard Preheader \ -->
+                                </div>
+                                <!-- // End Module: Standard Preheader \ -->
                             </td>
                         </tr>
                     </table>
@@ -45,15 +45,18 @@
                             <tr>
                                 <td align="left" valign="top" style="border-collapse: collapse;width:100%">
                                     <!-- // Begin Template Body \\ -->
-                                    <table border="0" cellpadding="0" cellspacing="0" style="background-color:#f9f9f9;border:1px solid #EEEEEE;margin-bottom: 10px;text-shadow: 1px 1px 1px #fff;">
-                                        <tr><td valign="top" class="bodyContent" style="border-collapse:collapse;border:1px solid #fff">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 10px;text-shadow: 1px 1px 1px #fff;width:100%">
+                                        <tr>
+                                            <td valign="top" class="bodyContent" style="border-collapse:collapse;">
+                                                <!-- // Begin Module: Standard Content \\ -->
                                                 <?= $content_view ?>
                                                 <div align="left" style="color:#707070;margin-left:10px;margin-top:10px;font-family: sans-serif;font-size:12px;line-height:125%;text-align:left">
                                                     <a href="<?= $post_link ?>" style="min-width:110px;font-size:12px;border-radius:2px;margin:0 10px 0 1px;padding:5px;">
                                                         View this on Realtasia
                                                     </a>
                                                 </div>
-                                            </td></tr>
+                                            </td>
+                                        </tr>
                                     </table>
                                     <!-- // End Template Body \\ -->
                                 </td>
@@ -91,15 +94,8 @@
                                                     </tbody>
                                                 </table>
                                                 <!-- // End Module: Standard Footer \\ -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="utility" style="border-collapse: collapse; background-color: #FCFDFE; border: 0;" bgcolor="#FCFDFE">
-                                                <div style="color: #999999; font-family: 'lucida grande',tahoma,verdana,arial,sans-serif; font-size: 11px; line-height: 125%;">
-                                                    If you prefer not to receive anymore RealtAsia emails like these, please <a href="<?= $notification_url ?>" style="color: #336699; font-weight: normal; text-decoration: underline;">Change notification settings</a>.
-                                                </div>
-                                            </td>
 
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td valign="top" width="350" style="border-collapse: collapse;">
@@ -122,7 +118,7 @@
         </table>
         <style type="text/css">
             body { width: 100% !important;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial; }
-            small{font-size:.81em !important;}            .ReadMsgBody { width: 100% !important; }
+            .ReadMsgBody { width: 100% !important; }
             .ExternalClass { width: 100% !important; }
             body { -webkit-text-size-adjust: none !important; }
             body { margin: 0 !important; padding: 0 !important; }

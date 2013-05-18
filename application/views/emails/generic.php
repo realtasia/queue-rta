@@ -15,8 +15,8 @@
                                 <!-- // Begin Module: Standard Preheader \ -->
                                 <div style="color: #505050; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial; font-size: 10px; line-height: 100%; text-align: left; padding:0;vertical-align: middle" align="left">
                                     <?php echo trim($teaser) ?>
-                                    /div>
-                                    <!-- // End Module: Standard Preheader \ -->
+                                </div>
+                                <!-- // End Module: Standard Preheader \ -->
                             </td>
                         </tr>
                     </table>
@@ -46,9 +46,12 @@
                                 <td align="left" valign="top" style="border-collapse: collapse;width:100%">
                                     <!-- // Begin Template Body \\ -->
                                     <table border="0" cellpadding="0" cellspacing="0" style="background-color:#f9f9f9;border:1px solid #EEEEEE;text-shadow: 1px 1px 1px #fff;">
-                                        <tr><td valign="top" class="bodyContent" style="border-collapse:collapse;border:1px solid #fff">
+                                        <tr>
+                                            <td valign="top" class="bodyContent" style="border-collapse:collapse;border:1px solid #fff">
+                                                <!-- // Begin Module: Standard Content \\ -->
                                                 <?= $content_view ?>
-                                            </td></tr>
+                                            </td>
+                                        </tr>
                                     </table>
                                     <!-- // End Template Body \\ -->
                                 </td>
@@ -87,14 +90,6 @@
                                                 </table>
                                                 <!-- // End Module: Standard Footer \\ -->
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" id="utility" style="border-collapse: collapse; background-color: #FCFDFE; border: 0;" bgcolor="#FCFDFE">
-                                                <div style="color: #999999; font-family: 'lucida grande',tahoma,verdana,arial,sans-serif; font-size: 11px; line-height: 125%;">
-                                                    If you prefer not to receive anymore RealtAsia emails like these, please <a href="<?= $notification_url ?>" style="color: #336699; font-weight: normal; text-decoration: underline;">Change notification settings</a>.
-                                                </div>
-                                            </td>
-
                                         </tr>
                                         <tr>
                                             <td valign="top" width="350" style="border-collapse: collapse;">
