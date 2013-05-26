@@ -1,5 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+
+defined('SYSPATH') or die('No direct script access.');
 require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
+
 /**
  * PHP Daemon. Original idea inspired/acquired from GitHub
  *
@@ -12,11 +15,11 @@ require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
  * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */
-
-class Controller_Email extends Controller_Daemon{
+class Controller_Email extends Controller_Daemon {
     /*
      * Forks into background and initializes daemon
      */
+
     public function action_index($config = 'default')
     {
 
@@ -27,12 +30,14 @@ class Controller_Email extends Controller_Daemon{
         {
 // Error - fork failed
             Kohana::$log->add('error', 'Queue. Initial fork failed');
+            Kohana::$log->write();
             exit;
         }
         elseif ($pid)
         {
 // Fork successful - exit parent (daemon continues in child)
             Kohana::$log->add('debug', 'Queue. Daemon created succesfully at: ' . $pid);
+            Kohana::$log->write();
             exit;
         }
         else
@@ -41,10 +46,10 @@ class Controller_Email extends Controller_Daemon{
             $this->_config = Kohana::$config->load('daemon')->$config;
 
             Kohana::$log->add('debug', strtr('Queue. Config :config loaded, max: :max, sleep: :sleep', array(
-                     ':config' => $config,
-                     ':max' => $this->_config['max'],
-                     ':sleep' => $this->_config['sleep']
-                  )));
+                ':config' => $config,
+                ':max'    => $this->_config['max'],
+                ':sleep'  => $this->_config['sleep']
+            )));
 
 // Write the log to ensure no memory issues
             Kohana::$log->write();
@@ -57,6 +62,7 @@ class Controller_Email extends Controller_Daemon{
     /*
      * This is the actual daemon process that reads queued items and executes them
      */
+
     protected function daemon()
     {
         try
@@ -65,12 +71,11 @@ class Controller_Email extends Controller_Daemon{
             {
                 // Find first task that is not being executed
                 $j = Document::factory('job')->get_next();
-
+                Kohana::$log->add('error', print_r($j, true));
+                Kohana::$log->write();
                 if (($j))
                 {
                     // Task found
-                    // Write log to prevent memory issues
-                    Kohana::$log->write();
                     $pro = new Job_Processor_Immediate($j);
 
                     if ($j['is_single'])
@@ -78,47 +83,54 @@ class Controller_Email extends Controller_Daemon{
                     else
                         $e = $pro->make_emails();
 
-                    $queue = new CFBatchRequest(100);
+                    $job = Document::factory('job', $j['_id']);
 
-                    foreach($e->emails as $email)
+                    if (count($emails > 0))
                     {
-                        $queue->add($email);
-                    }
-
-                    try
-                    {
-                        //$token = Profiler::start('email', 'Send Email');
-                        $res = $queue->send();
-                        $failure = "";
-                        //Profiler::stop($token);
-                        if(is_array($res))
+                        $queue = new CFBatchRequest(100);
+                        foreach ($e->emails as $email)
                         {
-                            foreach($res as $r)
-                            {
-                                $success = $r->isOK();
-                                $failure = $r->body;
-                            }
+                            Kohana::$log->add('error', print_r($email, true));
+                            $queue->add($email);
                         }
-
-                        $job = Document::factory('job', $j['_id']);
-
-                        if($success)
-                        {
-                            $job->update_status($job::SUCCESS);
-                        }
-                        else
-                        {
-                            Kohana::$log->add('error', $failure);
-                            Kohana::$log->write();
-                            $job->update_status($job::FAILED);
-                        }
-
-                        $queue = $j = $job = $pro = null;
-                    }
-                    catch (Exception $e)
-                    {
-                        Kohana::$log->add('error', 'Could not send email');
                         Kohana::$log->write();
+                        try
+                        {
+                            //$token = Profiler::start('email', 'Send Email');
+                            $res     = $queue->send();
+                            $failure = "";
+                            //Profiler::stop($token);
+                            if (is_array($res))
+                            {
+                                foreach ($res as $r)
+                                {
+                                    $success = $r->isOK();
+                                    $failure = (string) $r->body;
+                                }
+                            }
+
+                            if ($success)
+                            {
+                                $job->update_status($job::SUCCESS);
+                            }
+                            else
+                            {
+                                Kohana::$log->add('error', $failure);
+                                Kohana::$log->write();
+                                $job->update_status($job::FAILED);
+                            }
+
+                            $queue = $j     = $job   = $pro   = null;
+                        }
+                        catch (Exception $e)
+                        {
+                            Kohana::$log->add('error', 'Could not send email');
+                            Kohana::$log->write();
+                        }
+                    }
+                    else
+                    {
+                        $job->update_status($job::SUCCESS);
                     }
                 }
                 else
@@ -131,6 +143,8 @@ class Controller_Email extends Controller_Daemon{
         catch (Exception $e)
         {
             Kohana::$log->add('error', 'Email. Daemon failed, msg: ' . $e->getMessage());
+            Kohana::$log->write();
         }
     }
+
 }

@@ -98,6 +98,14 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td colspan="2" id="utility" style="border-collapse: collapse; background-color: #FCFDFE; border: 0;" bgcolor="#FCFDFE">
+                                                <div style="color: #999999; font-family: 'lucida grande',tahoma,verdana,arial,sans-serif; font-size: 11px; line-height: 125%;">
+                                                    If you prefer not to receive anymore RealtAsia emails like these, please <a href="<?= $notification_url ?>" style="color: #336699; font-weight: normal; text-decoration: underline;">Change notification settings</a>.
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
                                             <td valign="top" width="350" style="border-collapse: collapse;">
                                                 <div style="color: #999999; font-family: 'lucida grande',tahoma,verdana,'Open Sans', 'Helvetica Neue', Helvetica, Arial,sans-serif; font-size: 11px; line-height: 125%; text-align: left;" align="left">
                                                     Copyright &copy; 2010 - 2012 Realtasia Pte Ltd, All rights reserved.
