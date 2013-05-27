@@ -32,6 +32,12 @@ abstract class Controller_Daemon extends Controller {
      */
     protected $_pids = [];
 
+
+    /**
+     *
+     * @var boolean whether to turn on debugging
+     */
+    public $debug = false;
     /**
      * sets config (in case) and sets pcntl handlers
      */
@@ -46,9 +52,9 @@ abstract class Controller_Daemon extends Controller {
         set_time_limit(0);
 
         // Signal handler
-        pcntl_signal(SIGCHLD, [$this, 'sig_handler']);
-        pcntl_signal(SIGTERM, [$this, 'sig_handler']);
-        declare(ticks = 1);
+//        pcntl_signal(SIGCHLD, [$this, 'sig_handler']);
+//        pcntl_signal(SIGTERM, [$this, 'sig_handler']);
+//        declare(ticks = 1);
 
     }
 
@@ -109,5 +115,23 @@ abstract class Controller_Daemon extends Controller {
                 Kohana::$log->add('debug', 'Queue. Hit a SIGTERM');
                 break;
         }
+    }
+
+    /**
+     *
+     * @param mixed $message
+     * @return void
+     */
+    public function debug($message)
+    {
+        if($this->debug)
+        {
+            if(!is_string($message))
+                $message = print_r($message, true);
+
+            return Debug::log($message);
+        }
+
+        return true;
     }
 }

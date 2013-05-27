@@ -20,43 +20,45 @@ class Controller_Email extends Controller_Daemon {
      * Forks into background and initializes daemon
      */
 
+    public $debug = true;
+
     public function action_index($config = 'default')
     {
-
+        return $this->daemon();
 // fork into background
-        $pid = pcntl_fork();
-
-        if ($pid == -1)
-        {
-// Error - fork failed
-            Kohana::$log->add('error', 'Queue. Initial fork failed');
-            Kohana::$log->write();
-            exit;
-        }
-        elseif ($pid)
-        {
-// Fork successful - exit parent (daemon continues in child)
-            Kohana::$log->add('debug', 'Queue. Daemon created succesfully at: ' . $pid);
-            Kohana::$log->write();
-            exit;
-        }
-        else
-        {
-// Background process - run daemon
-            $this->_config = Kohana::$config->load('daemon')->$config;
-
-            Kohana::$log->add('debug', strtr('Queue. Config :config loaded, max: :max, sleep: :sleep', array(
-                ':config' => $config,
-                ':max'    => $this->_config['max'],
-                ':sleep'  => $this->_config['sleep']
-            )));
-
-// Write the log to ensure no memory issues
-            Kohana::$log->write();
-
-// run daemon
-            $this->daemon();
-        }
+//        $pid = pcntl_fork();
+//
+//        if ($pid == -1)
+//        {
+//// Error - fork failed
+//            Kohana::$log->add('error', 'Queue. Initial fork failed');
+//            Kohana::$log->write();
+//            exit;
+//        }
+//        elseif ($pid)
+//        {
+//// Fork successful - exit parent (daemon continues in child)
+//            Kohana::$log->add('debug', 'Queue. Daemon created succesfully at: ' . $pid);
+//            Kohana::$log->write();
+//            exit;
+//        }
+//        else
+//        {
+//// Background process - run daemon
+//            $this->_config = Kohana::$config->load('daemon')->$config;
+//
+//            Kohana::$log->add('debug', strtr('Queue. Config :config loaded, max: :max, sleep: :sleep', array(
+//                ':config' => $config,
+//                ':max'    => $this->_config['max'],
+//                ':sleep'  => $this->_config['sleep']
+//            )));
+//
+//// Write the log to ensure no memory issues
+//            Kohana::$log->write();
+//
+//// run daemon
+//            $this->daemon();
+//        }
     }
 
     /*
@@ -67,77 +69,70 @@ class Controller_Email extends Controller_Daemon {
     {
         try
         {
-            while (!$this->_sigterm)
+            // Find first task that is not being executed
+            $j = Document::factory('job')->get_next();
+            if (($j))
             {
-                // Find first task that is not being executed
-                $j = Document::factory('job')->get_next();
-                Kohana::$log->add('error', print_r($j, true));
-                Kohana::$log->write();
-                if (($j))
+                // Task found
+                $pro = new Job_Processor_Immediate($j);
+                //$this->debug($pro);
+
+                if ($j['is_single'])
+                    $e = $pro->make_emails('single');
+                else
+                    $e = $pro->make_emails();
+
+
+                $job = Document::factory('job', $j['_id']);
+                if (count($e->emails > 0))
                 {
-                    // Task found
-                    $pro = new Job_Processor_Immediate($j);
-
-                    if ($j['is_single'])
-                        $e = $pro->make_emails('single');
-                    else
-                        $e = $pro->make_emails();
-
-                    $job = Document::factory('job', $j['_id']);
-
-                    if (count($emails > 0))
+                    $queue = new CFBatchRequest(100);
+                    foreach ($e->emails as $email)
                     {
-                        $queue = new CFBatchRequest(100);
-                        foreach ($e->emails as $email)
-                        {
-                            Kohana::$log->add('error', print_r($email, true));
-                            $queue->add($email);
-                        }
-                        Kohana::$log->write();
-                        try
-                        {
-                            //$token = Profiler::start('email', 'Send Email');
-                            $res     = $queue->send();
-                            $failure = "";
-                            //Profiler::stop($token);
-                            if (is_array($res))
-                            {
-                                foreach ($res as $r)
-                                {
-                                    $success = $r->isOK();
-                                    $failure = (string) $r->body;
-                                }
-                            }
-
-                            if ($success)
-                            {
-                                $job->update_status($job::SUCCESS);
-                            }
-                            else
-                            {
-                                Kohana::$log->add('error', $failure);
-                                Kohana::$log->write();
-                                $job->update_status($job::FAILED);
-                            }
-
-                            $queue = $j     = $job   = $pro   = null;
-                        }
-                        catch (Exception $e)
-                        {
-                            Kohana::$log->add('error', 'Could not send email');
-                            Kohana::$log->write();
-                        }
+                        //$this->debug($email);
+                        $queue->add($email);
                     }
-                    else
+                    try
                     {
-                        $job->update_status($job::SUCCESS);
+                        //$token = Profiler::start('email', 'Send Email');
+                        $res     = $queue->send();
+                        $failure = "";
+                        //Profiler::stop($token);
+                        if (is_array($res))
+                        {
+                            foreach ($res as $r)
+                            {
+                                $success = $r->isOK();
+                                $failure = (string) $r->body;
+                                $this->debug($failure);
+                            }
+                        }
+
+                        if ($success)
+                        {
+                            $job->update_status($job::SUCCESS);
+                        }
+                        else
+                        {
+                            $this->debug($failure);
+                            $job->update_status($job::FAILED);
+                        }
+
+                        $queue = $j     = $job   = $pro   = null;
+                    }
+                    catch (Exception $e)
+                    {
+                        $this->debug($e);
                     }
                 }
                 else
                 {
-                    // No task in queue - sleep
-                    sleep(10);
+                    $job->update_status($job::SUCCESS);
                 }
+            }
+            else
+            {
+                exit();
             }
         }
         catch (Exception $e)
