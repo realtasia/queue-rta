@@ -1,7 +1,5 @@
 # define the runtime language
 runtime "binary"
-dir "/home/jason/repos/queue/system"
-dir "/home/jason/repos/queue/modules"
 dir "/home/jason/www/queue.casa.net/application"
 
 file "/home/jason/www/queue.casa.net/index.php"
