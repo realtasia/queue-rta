@@ -1,4 +1,8 @@
 # define the runtime language
 runtime "binary"
+dir "/home/jason/repos/queue/system"
+dir "/home/jason/repos/queue/application"
+dir "/home/jason/repos/queue/modules"
+file "/home/jason/repos/queue/index.php"
 # exec is the file that will be executed:
 exec "ProcessEmails.sh"

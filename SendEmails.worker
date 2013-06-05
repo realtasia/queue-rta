@@ -1,4 +1,7 @@
 # define the runtime language
 runtime "php"
+dir "/home/jason/repos/queue/system"
+dir "/home/jason/repos/queue/application"
+dir "/home/jason/repos/queue/modules"
 # exec is the file that will be executed:
 exec "SendEmails.php"
