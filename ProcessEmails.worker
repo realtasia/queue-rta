@@ -1,4 +1,4 @@
 # define the runtime language
-runtime "php"
+runtime "binary"
 # exec is the file that will be executed:
-exec "index.php --uri=email/index"
+exec "ProcessEmail.sh"

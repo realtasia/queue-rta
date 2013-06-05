@@ -1,4 +1,4 @@
 # define the runtime language
 runtime "php"
 # exec is the file that will be executed:
-exec "run.php"
+exec "SendEmails.php"
