@@ -72,11 +72,11 @@ define('APPPATH', realpath($application) . DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules) . DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system) . DIRECTORY_SEPARATOR);
 
-print_r(APPPATH) . PHP_EOL;
-print_r(MODPATH) . PHP_EOL;
-print_r(SYSPATH) . PHP_EOL;
-die;
-exit;
+//print_r(APPPATH) . PHP_EOL;
+//print_r(MODPATH) . PHP_EOL;
+//print_r(SYSPATH) . PHP_EOL;
+//die;
+//exit;
 
 // Clean up the configuration vars
 unset($application, $modules, $system);
