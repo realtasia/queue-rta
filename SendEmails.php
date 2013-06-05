@@ -2,8 +2,7 @@
 
 /* IRON_WORKER_HEADER */
 define('DOCROOT', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
-
-require_once DOCROOT . 'modules/kohana-aws/vendor/aws-sdk-for-php/sdk.class.php' . DIRECTORY_SEPARATOR;
+require_once 'modules/kohana-aws/vendor/aws-sdk-for-php/sdk.class.php' . DIRECTORY_SEPARATOR;
 
 $queue = @unserialize(getPayload());
 
