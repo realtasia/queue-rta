@@ -2,8 +2,8 @@
 runtime "binary"
 dir "/home/jason/repos/queue/system"
 dir "/home/jason/repos/queue/modules"
-dir "/home/jason/repos/queue/application"
+dir "/home/jason/www/queue.casa.net/application"
 
-file "/home/jason/repos/queue/index.php"
+file "/home/jason/www/queue.casa.net/index.php"
 # exec is the file that will be executed:
 exec "ProcessEmails.sh"
