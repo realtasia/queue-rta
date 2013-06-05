@@ -1,1 +1,1 @@
-php index.php --uri=email/index
+php ./index.php --uri=email/index
