@@ -1,4 +1,4 @@
 # define the runtime language
 runtime "binary"
 # exec is the file that will be executed:
-exec "ProcessEmail.sh"
+exec "ProcessEmails.sh"
