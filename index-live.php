@@ -98,7 +98,6 @@ if (!defined('KOHANA_START_MEMORY'))
 }
 
 // Bootstrap the application
-<?php defined('SYSPATH') or die('No direct script access.');
 
 // -- Environment setup --------------------------------------------------------
 
