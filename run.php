@@ -93,5 +93,3 @@ function getConfig()
 
     return $args['config'];
 }
-
-?>
