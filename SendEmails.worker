@@ -1,6 +1,5 @@
 # define the runtime language
 runtime "php"
 file "/home/jason/repos/queue/index.php"
-file "/home/jason/repos/queue/kohana.phar"
 # exec is the file that will be executed:
 exec "SendEmails.php"
