@@ -2,6 +2,7 @@
 
 defined('SYSPATH') or die('No direct script access.');
 require_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
+require_once 'phar://' . APPPATH . 'iron_worker.phar';
 
 /**
  * PHP Daemon. Original idea inspired/acquired from GitHub
@@ -20,45 +21,17 @@ class Controller_Email extends Controller_Daemon {
      * Forks into background and initializes daemon
      */
 
+    public function before()
+    {
+
+    }
+
     public $debug = true;
 
     public function action_index($config = 'default')
     {
+        //echo Debug::vars(new IronWorker());
         return $this->daemon();
-// fork into background
-//        $pid = pcntl_fork();
-//
-//        if ($pid == -1)
-//        {
-//// Error - fork failed
-//            Kohana::$log->add('error', 'Queue. Initial fork failed');
-//            Kohana::$log->write();
-//            exit;
-//        }
-//        elseif ($pid)
-//        {
-//// Fork successful - exit parent (daemon continues in child)
-//            Kohana::$log->add('debug', 'Queue. Daemon created succesfully at: ' . $pid);
-//            Kohana::$log->write();
-//            exit;
-//        }
-//        else
-//        {
-//// Background process - run daemon
-//            $this->_config = Kohana::$config->load('daemon')->$config;
-//
-//            Kohana::$log->add('debug', strtr('Queue. Config :config loaded, max: :max, sleep: :sleep', array(
-//                ':config' => $config,
-//                ':max'    => $this->_config['max'],
-//                ':sleep'  => $this->_config['sleep']
-//            )));
-//
-//// Write the log to ensure no memory issues
-//            Kohana::$log->write();
-//
-//// run daemon
-//            $this->daemon();
-//        }
     }
 
     /*
@@ -86,44 +59,42 @@ class Controller_Email extends Controller_Daemon {
                 $job = Document::factory('job', $j['_id']);
                 if (count($e->emails > 0))
                 {
-                    $queue = new CFBatchRequest(100);
-                    foreach ($e->emails as $email)
+                    // the iron worker
+                    $worker = new IronWorker();
+
+                    // divide into batches of 50
+                    $chunks = array_chunk($e->emails, 50);
+
+                    // no of chunks
+                    $total = count($chunks);
+
+                    //the CFBatchRequest(s) created
+                    $batches = array();
+
+                    $i = 0;
+
+                    while ($i < $total)
                     {
-                        //$this->debug($email);
-                        $queue->add($email);
-                    }
-                    try
-                    {
-                        //$token = Profiler::start('email', 'Send Email');
-                        $res     = $queue->send();
-                        $failure = "";
-                        //Profiler::stop($token);
-                        if (is_array($res))
+                        $batches[$i] = new CFBatchRequest(50);
+
+                        foreach ($chunks[$i] as $email)
                         {
-                            foreach ($res as $r)
-                            {
-                                $success = $r->isOK();
-                                $failure = (string) $r->body;
-                                $this->debug($failure);
-                            }
+                            $batches[$i]->add($email);
                         }
 
-                        if ($success)
-                        {
-                            $job->update_status($job::SUCCESS);
-                        }
-                        else
-                        {
-                            $this->debug($failure);
-                            $job->update_status($job::FAILED);
-                        }
+                        $task_id = $worker->postTask("sendEmail-php", serialize($batches[$i]));
+                        echo "task_id = $task_id \n";
 
-                        $queue = $j     = $job   = $pro   = null;
+                        # Wait for task finish
+                        $details = $worker->waitFor($task_id);
+                        print_r($details);
+
+                        $log = $worker->getLog($task_id);
+                        echo "Task log:\n $log\n";
+                        
+                        $i++;
                     }
-                    catch (Exception $e)
-                    {
-                        $this->debug($e);
-                    }
+
                 }
                 else
                 {
