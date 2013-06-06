@@ -16,7 +16,7 @@ require_once 'phar://' . APPPATH . 'iron_worker.phar';
  * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */
-class Controller_Email extends Controller_Daemon {
+class Controller_Email extends Controller {
     /*
      * Forks into background and initializes daemon
      */
@@ -31,6 +31,7 @@ class Controller_Email extends Controller_Daemon {
     public function action_index($config = 'default')
     {
         //echo Debug::vars(new IronWorker());
+        static::debug("Running Daemon");
         return $this->daemon();
     }
 
@@ -47,6 +48,7 @@ class Controller_Email extends Controller_Daemon {
             if (($j))
             {
                 // Task found
+                static::debug("Found Task");
                 $pro = new Job_Processor_Immediate($j);
                 //$this->debug($pro);
 
@@ -57,13 +59,17 @@ class Controller_Email extends Controller_Daemon {
 
 
                 $job = Document::factory('job', $j['_id']);
-                if (count($e->emails > 0))
+                static::debug("Is emails more than zero" . (string) count($e->emails));
+                if (count($e->emails) > 0)
                 {
                     // the iron worker
+                    //static::debug("Starting IronWorker");
                     $worker = new IronWorker();
 
-                    // divide into batches of 50
-                    $chunks = array_chunk($e->emails, 50);
+                    static::debug("Email Send worker started");
+
+                    $chunks = array_chunk($e->emails, 10);
+
 
                     // no of chunks
                     $total = count($chunks);
@@ -75,26 +81,22 @@ class Controller_Email extends Controller_Daemon {
 
                     while ($i < $total)
                     {
-                        $batches[$i] = new CFBatchRequest(50);
 
-                        foreach ($chunks[$i] as $email)
-                        {
-                            $batches[$i]->add($email);
-                        }
+                        static::debug("POSTING TASK");
 
-                        $task_id = $worker->postTask("sendEmail-php", serialize($batches[$i]));
-                        echo "task_id = $task_id \n";
+                        $task_id = $worker->postTask("SendEmails", $chunks[$i]);
+                        static::debug("task_id = $task_id");
 
                         # Wait for task finish
                         $details = $worker->waitFor($task_id);
-                        print_r($details);
+                        static::debug($details);
 
                         $log = $worker->getLog($task_id);
-                        echo "Task log:\n $log\n";
-                        
+                        static::debug("Task log:\n $log");
+
                         $i++;
                     }
-
+                    $job->update_status($job::SUCCESS);
                 }
                 else
                 {
@@ -111,6 +113,13 @@ class Controller_Email extends Controller_Daemon {
             Kohana::$log->add('error', 'Email. Daemon failed, msg: ' . $e->getMessage());
             Kohana::$log->write();
         }
+    }
+
+    public static function debug($text)
+    {
+        echo "$text \n";
+        echo "-------------------------------- \n";
+        return;
     }
 
 }

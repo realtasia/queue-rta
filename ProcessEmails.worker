@@ -3,6 +3,7 @@ runtime "binary"
 dir "/home/jason/repos/queue/application"
 
 file "/home/jason/repos/queue/index.php"
+file "/home/jason/repos/queue/iron.json"
 
 # exec is the file that will be executed:
 exec "ProcessEmails.sh"

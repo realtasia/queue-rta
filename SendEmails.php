@@ -1,17 +1,27 @@
 <?php
 
 /* IRON_WORKER_HEADER */
-define('DOCROOT', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
-require_once 'modules/kohana-aws/vendor/aws-sdk-for-php/sdk.class.php' . DIRECTORY_SEPARATOR;
 
-$queue = @unserialize(getPayload());
+require_once 'phar://application/aws.phar';
+require_once 'application/modules/RT/classes/init.php';
 
-if ($queue instanceof CFBatchRequest)
+use Aws\Ses\SesClient;
+
+$sender = SesClient::factory(array(
+    'key'    => RT::AWS_KEY,
+    'secret' => RT::AWS_SECRET,
+));
+
+$queue = getPayload();
+
+print_r($queue);
+
+foreach ($queue as $email)
 {
     try
     {
 
-        $res     = $queue->send();
+        $res     = $sender->sendEmail($email);
         $failure = "";
         if (is_array($res))
         {
@@ -30,7 +40,7 @@ if ($queue instanceof CFBatchRequest)
 
         $queue = null;
     }
-    catch (Exception $e)
+    catch (MessageRejectedException $e)
     {
         echo $e->getMessage();
     }
