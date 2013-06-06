@@ -3,25 +3,26 @@
 /* IRON_WORKER_HEADER */
 
 require_once 'phar://application/aws.phar';
-require_once 'application/modules/RT/classes/init.php';
+require_once 'application/modules/RT/init.php';
 
 use Aws\Ses\SesClient;
 
 $sender = SesClient::factory(array(
     'key'    => RT::AWS_KEY,
     'secret' => RT::AWS_SECRET,
+    'region' => 'us-east-1'
 ));
 
 $queue = getPayload();
 
-print_r($queue);
-
 foreach ($queue as $email)
 {
+    //$email = json_decode(json_encode($email), true);
     try
     {
+        print_r( (array) $email);
 
-        $res     = $sender->sendEmail($email);
+        $res     = $sender->sendEmail( (array) $email);
         $failure = "";
         if (is_array($res))
         {
