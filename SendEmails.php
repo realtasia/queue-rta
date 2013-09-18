@@ -17,31 +17,36 @@ $queue = getPayload();
 
 foreach ($queue as $email)
 {
-    //$email = json_decode(json_encode($email), true);
+    $email = json_decode(json_encode($email), true);
     try
     {
-        print_r( (array) $email);
-
-        $res     = $sender->sendEmail( (array) $email);
+        echo "Sending Email \n";
+        echo "-------------------------------- \n";
+        $res     = $sender->sendEmail($email);
+        print_r($res->toArray());
         $failure = "";
-        if (is_array($res))
-        {
-            foreach ($res as $r)
-            {
-                $success = $r->isOK();
-                $failure = (string) $r->body;
-                print_r($failure);
-            }
-        }
-
-        if (!$success)
-        {
-            print_r($failure);
-        }
+//        if (is_array($res))
+//        {
+//            foreach ($res as $r)
+//            {
+//                $success = $r->isOK();
+//                $failure = (string) $r->body;
+//                print_r($failure);
+//            }
+//        }
+//
+//        if (!$success)
+//        {
+//            print_r($failure);
+//        }
 
         $queue = null;
     }
     catch (MessageRejectedException $e)
+    {
+        echo $e->getMessage();
+    }
+    catch (Exception $e)
     {
         echo $e->getMessage();
     }

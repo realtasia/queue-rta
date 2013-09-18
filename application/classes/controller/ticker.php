@@ -143,7 +143,7 @@ class Controller_Ticker extends Controller_Daemon {
                                 }
                                 if (!empty($docs))
                                 {
-                                    $t->bulk_create(array_filter($docs));
+                                    $t->bulk_create(array_filter(array_unique($docs)));
                                 }
                             }
                             break;

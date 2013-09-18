@@ -83,7 +83,10 @@ class Controller_Email extends Controller {
                     {
 
                         static::debug("POSTING TASK");
-
+//                        file_put_contents('payload.json', $chunks[$i]);
+//                        $output = shell_exec("iron_worker run /home/jason/repos/queue/SendEmails.worker --payload-file /home/jason/repos/queue/payload.json");
+//                        print_r($output);
+//                        static::debug("Done");
                         $task_id = $worker->postTask("SendEmails", $chunks[$i]);
                         static::debug("task_id = $task_id");
 
@@ -96,16 +99,18 @@ class Controller_Email extends Controller {
 
                         $i++;
                     }
+                    static::debug("Job found, processed $i batches of 10 emails each.");
                     $job->update_status($job::SUCCESS);
                 }
                 else
                 {
+                    static::debug("Job found but no emails to process. Changing job status to success");
                     $job->update_status($job::SUCCESS);
                 }
             }
             else
             {
-                exit();
+                die("No Job to process.");
             }
         }
         catch (Exception $e)
