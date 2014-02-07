@@ -30,7 +30,7 @@
                                         <div class="topbar" data-dropdown="dropdown">
                                             <div class="topbar-inner">
                                                 <div class="container">
-                                                    <a style="display:block;padding:4px; color:#fff" href="/"><img width="200px" height="46px" style="height: auto !important;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, serif !important; font-size: .9em;line-height: 100% !important; outline: none !important; text-decoration: none !important; border: 0;color:#fff" class="full-logo" alt="RealtAsia Logo" src="http://static2.realtasia.com.sg/realtlogo6.png"></a>
+                                                    <a style="display:block;padding:4px; color:#fff" href="/"><img width="200px" height="46px" style="height: auto !important;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, serif !important; font-size: .9em;line-height: 100% !important; outline: none !important; text-decoration: none !important; border: 0;color:#fff" class="full-logo" alt="RealtAsia Logo" src="http://static.realtasia.com.sg/realtlogo6.png"></a>
                                                     <div class="clear"></div>
                                                 </div>
                                             </div><!-- /topbar-inner -->

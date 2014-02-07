@@ -1,0 +1,723 @@
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  '_id' => 
+  MongoId::__set_state(array(
+     '$id' => '513dbff76c0199dd5b000017',
+  )),
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+Total Notifications: 1 
+Starting to process notifications.... 
+In notify 
+In comment 
+passing to summary builder 
+In summary builder 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+In notify 
+In comment 
+passing to summary builder 
+In summary builder 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  '_id' => 
+  MongoId::__set_state(array(
+     '$id' => '513dbff76c0199dd5b000017',
+  )),
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+Total Notifications: 1 
+Starting to process notifications.... 
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  '_id' => 
+  MongoId::__set_state(array(
+     '$id' => '513dbff76c0199dd5b000017',
+  )),
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+Total Notifications: 1 
+Starting to process notifications.... 
+In notify 
+In comment 
+passing to summary builder 
+In summary builder 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+In notify 
+In comment 
+passing to summary builder 
+In summary builder 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  '_id' => 
+  MongoId::__set_state(array(
+     '$id' => '513dbff76c0199dd5b000017',
+  )),
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+Total Notifications: 1 
+Starting to process notifications.... 
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  '_id' => 
+  MongoId::__set_state(array(
+     '$id' => '513dbff76c0199dd5b000017',
+  )),
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+Total Notifications: 1 
+Starting to process notifications.... 
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 64 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/collection.php on line 193
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32 bytes) in /home/jason/www/common/kohana/modules/mongodb/classes/mongo/database.php on line 227
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+In notify 
+In wallpost 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  '_id' => 
+  MongoId::__set_state(array(
+     '$id' => '513dbff76c0199dd5b000017',
+  )),
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+Total Notifications: 1 
+Starting to process notifications.... 
+In notify 
+In comment 
+passing to summary builder 
+In summary builder 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+In notify 
+In comment 
+passing to summary builder 
+In summary builder 
+In people counter 
+Count is less than or equal to 3: 1 
+Done fetching users 
+receipient..................: 
+array (
+  '_id' => 
+  MongoId::__set_state(array(
+     '$id' => '513dbff76c0199dd5b000017',
+  )),
+  'avatar' => '',
+  'email' => 'yvonne.nathan@realtasia.com',
+  'first_name' => 'Yvonne',
+  'info' => 
+  array (
+    'gender' => 'female',
+  ),
+  'name' => 'Yvonne Nathan',
+  'settings' => 
+  array (
+    'notifications' => 
+    array (
+      'email' => '',
+      'likers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+        'comments' => true,
+      ),
+      'subscribers' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+        'profile' => true,
+      ),
+      'comments' => 
+      array (
+        'own_post' => true,
+        'other_posts' => true,
+      ),
+      'mentions' => true,
+      'testimonial' => true,
+      'wallpost' => true,
+      'messages' => true,
+      'pages' => 'Weekly',
+    ),
+  ),
+) 
+..................: 
+Total Notifications: 1 
+Starting to process notifications.... 

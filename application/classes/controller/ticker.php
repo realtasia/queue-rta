@@ -12,7 +12,7 @@ defined('SYSPATH') or die('No direct script access.');
  * @version 1.0
  * @copyright 2012 Realtasia Pte Ltd
  */
-class Controller_Ticker extends Controller_Daemon {
+class Controller_Ticker extends Controller {
     /*
      * Forks into background and initializes daemon
      */
@@ -20,38 +20,7 @@ class Controller_Ticker extends Controller_Daemon {
     public function action_index($config = 'default')
     {
 
-        // fork into background
-        $pid = pcntl_fork();
-
-        if ($pid == -1)
-        {
-            // Error - fork failed
-            Kohana::$log->add('error', 'Queue. Initial fork failed');
-            exit;
-        }
-        elseif ($pid)
-        {
-            // Fork successful - exit parent (daemon continues in child)
-            Kohana::$log->add('debug', 'Queue. Daemon created succesfully at: ' . $pid);
-            exit;
-        }
-        else
-        {
-            // Background process - run daemon
-            $this->_config = Kohana::$config->load('daemon')->$config;
-
-            Kohana::$log->add('debug', strtr('Queue. Config :config loaded, max: :max, sleep: :sleep', [
-                        ':config' => $config,
-                        ':max'    => $this->_config['max'],
-                        ':sleep'  => $this->_config['sleep']
-                    ]));
-
-            // Write the log to ensure no memory issues
-            Kohana::$log->write();
-
-            // run daemon
-            $this->daemon();
-        }
+        $this->daemon();
     }
 
     /*
@@ -75,7 +44,7 @@ class Controller_Ticker extends Controller_Daemon {
     {
         try
         {
-            while (!$this->_sigterm)
+            while (true)
             {
                 // Find first task that is not being executed
                 $j = static::get_next();
@@ -192,7 +161,7 @@ class Controller_Ticker extends Controller_Daemon {
                 else
                 {
                     // No task in queue - sleep
-                    sleep(1);
+                    sleep(5);
                 }
             }
         }
@@ -212,15 +181,6 @@ class Controller_Ticker extends Controller_Daemon {
      */
     public static function get_next()
     {
-//        $this->collection()->deleteIndexes();
-//        Collection::factory('job')->ensureIndex([
-//            'in_progress' => 1,
-//            'delivery'    => 1,
-//            'status'      => 1
-//        ]);
-//        $this->collection()->ensureIndex([ticker_type
-//            'document_id' => 1
-//        ]);
         try
         {
             return Collection::factory('job')->collection()->findAndModify([

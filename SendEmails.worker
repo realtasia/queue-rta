@@ -1,7 +1,0 @@
-# define the runtime language
-runtime "php"
-dir "/home/jason/repos/queue/application"
-file "/home/jason/repos/queue/iron.json"
-
-# exec is the file that will be executed:
-exec "SendEmails.php"
