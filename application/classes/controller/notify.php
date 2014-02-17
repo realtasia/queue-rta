@@ -73,35 +73,7 @@ class Controller_Notify extends Controller {
 	                	static::debug("Creating Connection to QUEUE ");
 						$e->addAll();
 						$job->update_status($job::SUCCESS);
-	                    // the iron worker
-	                    //static::debug("Starting IronWorker");
-	                    //$worker = new IronWorker();
-	                    //$queue = $context = new ZMQContext();
-						//$socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
-						
-						//static::debug(RT::QUEUE_SERVER);
-						//$socket->connect("tcp://".RT::QUEUE_SERVER);
-						/* Assign socket 1 to the queue, send and receive */
-						//$retries = 5;
-						//$sending = true;
-						//static::debug("Email Send worker started");
-	
-	                    //$chunks = array_chunk($e->emails, 10);
-	
-	
-	                    // no of chunks
-	                    //$total = count($chunks);
-	
-	                    //the CFBatchRequest(s) created
-	                    //$batches = array();
-	
-	                    //$i = 0;
-						//while($i < $total)
-						//{
-						//	Sendemails::send($chunks[$i]);
-						//	$i++;
-						//}
-	                    //static::debug("Job found, processed $i batches of 10 emails each.");
+
 	                }
 	                else
 	                {

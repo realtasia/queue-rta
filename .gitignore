@@ -1,2 +1,5 @@
 /application/cache/
 /application/logs/
+emailer.log
+notifier.log
+ticker.log
