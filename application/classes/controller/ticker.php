@@ -161,7 +161,7 @@ class Controller_Ticker extends Controller {
                 else
                 {
                     // No task in queue - sleep
-                    sleep(5);
+                    sleep(11);
                 }
             }
         }

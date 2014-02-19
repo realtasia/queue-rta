@@ -93,7 +93,7 @@ class Controller_Notify extends Controller {
 	            Kohana::$log->add('error', 'Email. Daemon failed, msg: ' . $e->getMessage());
 	            Kohana::$log->write();
 	        }
-			sleep(2);
+			sleep(10);
         }
     }
 

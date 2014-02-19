@@ -78,7 +78,7 @@ class Controller_Email extends Controller {
 	        {
 	            static::debug('error', 'Email. Daemon failed, msg: ' . $e->getMessage());
 	        }
-			sleep(2);
+			sleep(9);
         }
     }
 
