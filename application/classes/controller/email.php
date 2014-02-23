@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-include_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
+//include_once MODPATH . 'kohana-aws/vendor/aws-sdk-for-php/sdk.class.php';
 include_once MODPATH . 'RT/init.php';
 include_once APPPATH . 'classes/sendemails.php';
 
@@ -76,7 +76,7 @@ class Controller_Email extends Controller {
 	        }
 	        catch (Exception $e)
 	        {
-	            static::debug('error', 'Email. Daemon failed, msg: ' . $e->getMessage());
+	            static::debug('Email. Daemon failed, msg: ' . $e->getMessage());
 	        }
 			sleep(9);
         }

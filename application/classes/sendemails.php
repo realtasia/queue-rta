@@ -16,13 +16,13 @@ class Sendemails {
 		try {
 			static::debug("Sending Email");
 			$res = $sender->sendEmail($email);
-			static::debug($res->toArray());
+			static::debug(["responseFromSES" => $res->toArray()]);
 			$failure = "";
 			$queue = null;
 		} catch (MessageRejectedException $e) {
-			static::debug($e -> getMessage());
+			static::debug(['MessageRejectedException' => $e->getMessage()]);
 		} catch (Exception $e) {
-			static::debug($e -> getMessage());
+			static::debug(['Exception' => $e->getMessage()]);
 		}
 
 	}
