@@ -60,7 +60,7 @@ class Controller_Email extends Controller {
 	                	static::debug("Creating Connection to QUEUE ");
 						Sendemails::send($raw->email);
 
-	                    $n->update_emailed_status();
+	                    $n->update_emailed_status();						
 	                }
 	                else
 	                {
